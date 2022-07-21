@@ -17,6 +17,7 @@ import sg.edu.nus.iss.day13revision.models.PersonForm;
 import sg.edu.nus.iss.day13revision.services.PersonService;
 
 @Controller
+// @RequestMapping(path="/person") --> adds a /person behind localhost/person/....
 public class PersonController {
     private List<Person> personList = new ArrayList<Person>();
 
@@ -30,6 +31,7 @@ public class PersonController {
     private String errorMessage;
 
     @RequestMapping(value={"/", "/home", "/index"}, method=RequestMethod.GET)
+    // @GetMapping(value={"/", "/home", "/index"})
     public String index(Model model) {
         model.addAttribute("message", message);
 
@@ -37,6 +39,7 @@ public class PersonController {
     }
 
     @RequestMapping(value="/testRetrieve", method=RequestMethod.GET, produces="application/json")
+    // @GetMapping(value="/testRetrieve", produces="application/json")
     public @ResponseBody List<Person> getAllPersons() {
         personList = perSvc.getPersons();
 
@@ -44,6 +47,7 @@ public class PersonController {
     }
 
     @RequestMapping(value="/personList", method=RequestMethod.GET)
+    // @GetMapping(value="/personList")
     public String personList(Model model) {
         personList = perSvc.getPersons();
         model.addAttribute("persons", personList);
@@ -52,6 +56,7 @@ public class PersonController {
     }
 
     @RequestMapping(value="/addPerson", method=RequestMethod.GET)
+    // @GetMapping(value="/addPerson")
     public String showAddPersonPage(Model model) {
         
         PersonForm pForm = new PersonForm();
@@ -62,6 +67,7 @@ public class PersonController {
     }
 
     @RequestMapping(value="/addPerson", method=RequestMethod.POST, produces="application/json") // method cannot be the same as the above (get)
+    // @PostMapping(value="/addPerson", produces="application/json")
     public String savePerson(Model model, 
     @ModelAttribute("personForm") PersonForm personForm) { // as the items are passed as objects (in the addPerson.html), don't need to use multivaluemap here. Instead, objects are passed as ModelAttributes
 
